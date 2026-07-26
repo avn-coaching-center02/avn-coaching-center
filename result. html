@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="hi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>AVN Coaching Center Result</title>
+
+<style>
+body{
+font-family:Arial;
+background:#f2f6fa;
+margin:0;
+text-align:center;
+}
+header{
+background:#075985;
+color:white;
+padding:25px 10px;
+}
+.box{
+background:white;
+margin:25px auto;
+padding:25px;
+max-width:500px;
+border-radius:12px;
+box-shadow:0 2px 10px #bbb;
+}
+input{
+padding:12px;
+width:80%;
+font-size:17px;
+}
+button{
+padding:12px 20px;
+margin:15px;
+background:#075985;
+color:white;
+border:0;
+border-radius:7px;
+font-size:16px;
+}
+table{
+width:100%;
+border-collapse:collapse;
+}
+td,th{
+border:1px solid #ccc;
+padding:9px;
+}
+th{
+background:#075985;
+color:white;
+}
+#result{
+display:none;
+}
+#error{
+color:red;
+}
+</style>
+</head>
+
+<body>
+
+<header>
+<h1>📚 AVN Coaching Center</h1>
+<p>Naraini, Shafipur, Sultanpur</p>
+<h2>🎓 Student Result</h2>
+</header>
+
+<div class="box">
+
+<p>अपना Roll Number डालें</p>
+
+<input id="roll" placeholder="Roll Number">
+
+<br>
+
+<button onclick="showResult()">Result देखें</button>
+
+<p id="error"></p>
+
+<div id="result">
+
+<h2 id="name"></h2>
+
+<p>
+Roll No: <b id="rno"></b><br>
+Class: <b id="class"></b>
+</p>
+
+<table>
+<tr>
+<th>Subject</th>
+<th>Marks</th>
+</tr>
+<tbody id="marks"></tbody>
+</table>
+
+<h3>Total: <span id="total"></span></h3>
+<h3>Percentage: <span id="percent"></span>%</h3>
+<h3 id="status"></h3>
+
+</div>
+</div>
+
+<script>
+
+const students=[
+{
+roll:"101",
+name:"Demo Student",
+class:"10",
+marks:{
+Hindi:80,
+English:75,
+Mathematics:85,
+Science:82,
+"Social Science":78
+}
+}
+];
+
+function showResult(){
+
+let roll=document.getElementById("roll").value.trim();
+
+let s=students.find(x=>x.roll===roll);
+
+if(!s){
+document.getElementById("result").style.display="none";
+document.getElementById("error").innerText="Result नहीं मिला";
+return;
+}
+
+document.getElementById("error").innerText="";
+document.getElementById("name").innerText=s.name;
+document.getElementById("rno").innerText=s.roll;
+document.getElementById("class").innerText=s.class;
+
+let total=0;
+let html="";
+let pass=true;
+
+for(let subject in s.marks){
+
+let m=s.marks[subject];
+
+total+=m;
+
+if(m<33) pass=false;
+
+html+="<tr><td>"+subject+"</td><td>"+m+"</td></tr>";
+
+}
+
+let count=Object.keys(s.marks).length;
+
+document.getElementById("marks").innerHTML=html;
+document.getElementById("total").innerText=total+"/"+(count*100);
+document.getElementById("percent").innerText=(total/count).toFixed(2);
+document.getElementById("status").innerText=pass?"PASS ✅":"FAIL";
+
+document.getElementById("result").style.display="block";
+
+}
+
+</script>
+
+</body>
+</html>
