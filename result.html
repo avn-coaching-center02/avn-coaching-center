@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="hi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>AVN Coaching Center - Result Portal</title>
+<style>
+*{box-sizing:border-box}
+body{margin:0;font-family:Arial,sans-serif;background:#f3f6f9;color:#1f2937}
+header{background:linear-gradient(135deg,#075985,#0f766e);color:white;text-align:center;padding:28px 12px}
+header h1{margin:0 0 8px;font-size:28px} header p{margin:5px}
+.wrap{max-width:600px;margin:24px auto;padding:14px}
+.card{background:white;padding:22px;border-radius:14px;box-shadow:0 3px 14px rgba(0,0,0,.12)}
+h2{text-align:center;color:#075985}
+input,select{width:100%;padding:13px;margin:8px 0;border:1px solid #aaa;border-radius:8px;font-size:16px}
+button{width:100%;padding:14px;margin-top:10px;border:0;border-radius:8px;background:#075985;color:white;font-size:17px;font-weight:bold}
+#error{text-align:center;color:#b91c1c;font-weight:bold;margin-top:14px}
+#result{display:none;margin-top:20px}
+.info,.summary{background:#eef7fc;padding:13px;border-radius:9px;line-height:1.8}
+table{width:100%;border-collapse:collapse;margin:15px 0}
+th,td{border:1px solid #d1d5db;padding:9px;text-align:center}
+th{background:#075985;color:white}
+.pass{color:green;font-weight:bold}.fail{color:#b91c1c;font-weight:bold}
+footer{text-align:center;background:#075985;color:white;padding:18px;margin-top:30px}
+</style>
+</head>
+<body>
+<header>
+<h1>📚 AVN Coaching Center</h1>
+<p>Naraini, Shafipur, Sultanpur</p>
+<p>🎓 Student Result Portal</p>
+</header>
+<div class="wrap"><div class="card">
+<h2>अपना रिजल्ट देखें</h2>
+<input id="roll" placeholder="Roll Number डालें">
+<select id="test">
+<option value="">-- Test चुनें --</option>
+<option value="test1">Weekly Test - 1</option>
+<option value="test2">Weekly Test - 2</option>
+</select>
+<button onclick="showResult()">🔍 Result देखें</button>
+<div id="error"></div>
+<div id="result">
+<div class="info">
+<b>नाम:</b> <span id="name"></span><br>
+<b>Roll No:</b> <span id="rno"></span><br>
+<b>Class:</b> <span id="cls"></span><br>
+<b>Test:</b> <span id="exam"></span>
+</div>
+<table><thead><tr><th>Subject</th><th>Marks</th></tr></thead><tbody id="marks"></tbody></table>
+<div class="summary">
+<b>Total:</b> <span id="total"></span><br>
+<b>Percentage:</b> <span id="percent"></span>%<br>
+<b>Result:</b> <span id="status"></span>
+</div>
+</div>
+</div></div>
+<footer>ज्ञान • अनुशासन • सफलता<br>AVN Coaching Center</footer>
+<script>
+const students=[
+{roll:"101",name:"Rahul Yadav",className:"10",tests:{
+test1:{Hindi:42,English:40,Mathematics:46,Science:44,"Social Science":43},
+test2:{Hindi:44,English:41,Mathematics:48,Science:45,"Social Science":46}}},
+{roll:"102",name:"Anjali Yadav",className:"10",tests:{
+test1:{Hindi:46,English:45,Mathematics:48,Science:47,"Social Science":44},
+test2:{Hindi:47,English:46,Mathematics:49,Science:48,"Social Science":45}}},
+{roll:"103",name:"Aman Kumar",className:"10",tests:{
+test1:{Hindi:35,English:38,Mathematics:41,Science:39,"Social Science":37},
+test2:{Hindi:39,English:40,Mathematics:43,Science:42,"Social Science":41}}}
+];
+function showResult(){
+const roll=document.getElementById("roll").value.trim();
+const test=document.getElementById("test").value;
+const err=document.getElementById("error"), box=document.getElementById("result");
+if(!roll||!test){err.textContent="Roll Number और Test दोनों भरें।";box.style.display="none";return}
+const s=students.find(x=>x.roll===roll);
+if(!s||!s.tests[test]){err.textContent="Result नहीं मिला।";box.style.display="none";return}
+err.textContent="";
+const d=s.tests[test]; let total=0, rows="",pass=true;
+for(const subject in d){const m=d[subject];total+=m;if(m<17)pass=false;rows+=`<tr><td>${subject}</td><td>${m} / 50</td></tr>`}
+document.getElementById("name").textContent=s.name;
+document.getElementById("rno").textContent=s.roll;
+document.getElementById("cls").textContent=s.className;
+document.getElementById("exam").textContent=test==="test1"?"Weekly Test - 1":"Weekly Test - 2";
+document.getElementById("marks").innerHTML=rows;
+document.getElementById("total").textContent=total+" / "+(Object.keys(d).length*50);
+document.getElementById("percent").textContent=(total/(Object.keys(d).length*50)*100).toFixed(2);
+const st=document.getElementById("status");st.textContent=pass?"PASS ✅":"FAIL ❌";st.className=pass?"pass":"fail";
+box.style.display="block";
+}
+</script>
+</body>
+</html>
