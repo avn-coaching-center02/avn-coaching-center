@@ -1,297 +1,4 @@
-<!DOCTYPE html>
-<html lang="hi">
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-<title>AVN Coaching Center - Result Portal</title>
-
-<style>
-*{
-    box-sizing:border-box;
-}
-
-body{
-    margin:0;
-    font-family:Arial, sans-serif;
-    background:#f2f6fa;
-    color:#222;
-}
-
-header{
-    background:#075985;
-    color:white;
-    padding:25px 10px;
-    text-align:center;
-}
-
-header h1{
-    margin:0;
-    font-size:27px;
-}
-
-header p{
-    margin:8px 0 0;
-}
-
-.container{
-    max-width:600px;
-    margin:25px auto;
-    padding:15px;
-}
-
-.box{
-    background:white;
-    padding:25px 18px;
-    border-radius:12px;
-    box-shadow:0 3px 15px rgba(0,0,0,0.12);
-}
-
-h2{
-    color:#075985;
-    text-align:center;
-}
-
-input{
-    width:100%;
-    padding:14px;
-    margin:10px 0;
-    border:1px solid #aaa;
-    border-radius:8px;
-    font-size:17px;
-}
-
-button{
-    width:100%;
-    padding:14px;
-    background:#075985;
-    color:white;
-    border:none;
-    border-radius:8px;
-    font-size:17px;
-    font-weight:bold;
-    cursor:pointer;
-}
-
-button:hover{
-    background:#064663;
-}
-
-#result{
-    display:none;
-    margin-top:25px;
-}
-
-.student-name{
-    text-align:center;
-    color:#075985;
-    font-size:22px;
-    font-weight:bold;
-}
-
-table{
-    width:100%;
-    border-collapse:collapse;
-    margin-top:15px;
-}
-
-th,td{
-    border:1px solid #ddd;
-    padding:10px 5px;
-    text-align:center;
-}
-
-th{
-    background:#075985;
-    color:white;
-}
-
-.summary{
-    margin-top:18px;
-    padding:15px;
-    background:#eef7fc;
-    border-radius:8px;
-    line-height:1.8;
-}
-
-.pass{
-    color:green;
-    font-weight:bold;
-}
-
-.fail{
-    color:red;
-    font-weight:bold;
-}
-
-#error{
-    color:red;
-    text-align:center;
-    font-weight:bold;
-    margin-top:15px;
-}
-
-footer{
-    text-align:center;
-    background:#075985;
-    color:white;
-    padding:18px;
-    margin-top:35px;
-}
-</style>
-</head>
-
-<body>
-
-<header>
-    <h1>AVN Coaching Center</h1>
-    <p>Naraini, Shafipur, Sultanpur</p>
-    <p><b>Student Result Portal</b></p>
-</header>
-
-<div class="container">
-
-<div class="box">
-
-<h2>अपना रिजल्ट देखें</h2>
-
-<input
-    type="text"
-    id="roll"
-    placeholder="अपना Roll Number डालें"
->
-
-<button onclick="showResult()">
-    View Result
-</button>
-
-<div id="error"></div>
-
-<div id="result">
-
-<div class="student-name" id="studentName"></div>
-
-<div class="summary">
-<b>Roll Number:</b> <span id="studentRoll"></span><br>
-<b>Class:</b> <span id="studentClass"></span><br>
-<b>Test:</b> <span id="testName"></span><br>
-<b>Date:</b> <span id="testDate"></span>
-</div>
-
-<table>
-<thead>
-<tr>
-<th>Subject</th>
-<th>Marks</th>
-</tr>
-</thead>
-
-<tbody id="marks"></tbody>
-</table>
-
-<div class="summary">
-<b>Total:</b>
-<span id="total"></span>
-<br>
-
-<b>Percentage:</b>
-<span id="percentage"></span>%
-<br>
-
-<b>Result:</b>
-<span id="status"></span>
-</div>
-
-</div>
-</div>
-</div>
-
-<footer>
-© 2026 AVN Coaching Center
-</footer>
-
-<script>
-
-/*
-========================================
-यहाँ विद्यार्थियों के Result जोड़ने हैं
-========================================
-*/
-
-const students = [
-
-{
-roll:"101",
-name:"Rahul Yadav",
-class:"10",
-test:"Weekly Test - 1",
-date:"26 July 2026",
-
-marks:{
-"Mathematics":42,
-"Science":44,
-"English":40,
-"Hindi":45,
-"Social Science":41
-},
-
-maxMarks:250
-},
-
-{
-roll:"102",
-name:"Anjali",
-class:"10",
-test:"Weekly Test - 1",
-date:"26 July 2026",
-
-marks:{
-"Mathematics":46,
-"Science":43,
-"English":45,
-"Hindi":47,
-"Social Science":44
-},
-
-maxMarks:250
-}
-
-];
-
-
-/*
-========================================
-Result Search System
-========================================
-*/
-
-function showResult(){
-
-const roll =
-document.getElementById("roll").value.trim();
-
-const student =
-students.find(s => s.roll === roll);
-
-const resultBox =
-document.getElementById("result");
-
-const error =
-document.getElementById("error");
-
-if(!student){
-
-resultBox.style.display="none";
-
-error.innerHTML =
-"❌ इस Roll Number का Result नहीं मिला।";
-
-return;
-}
-
-error.innerHTML="";
-
-document.getElementById("studentName")
+ document.getElementById("studentName")
 .innerText = student.name;
 
 document.getElementById("studentRoll")
@@ -363,3 +70,60 @@ resultBox.style.display="block";
 
 </body>
 </html>
+   <tr>
+<td>Mathematics</td>
+<td>${student.mathematics}</td>
+</tr>
+
+<tr>
+<td>Biology</td>
+<td>${student.biology}</td>
+</tr>
+
+<tr>
+<td colspan="2" style="background:#f5f5f5;font-weight:bold;">
+${student.status}
+</td>
+</tr>
+`;
+
+document.getElementById("marks").innerHTML = html;
+
+document.getElementById("total").innerHTML =
+"Result Awaited";
+
+document.getElementById("percentage").innerHTML =
+"Result Awaited";
+
+const status =
+document.getElementById("status");
+
+status.innerHTML = student.status;
+
+if(student.status=="PASS"){
+
+status.className="pass";
+
+}else if(student.status=="FAIL"){
+
+status.className="fail";
+
+}else{
+
+status.style.color="#ff9800";
+status.style.fontWeight="bold";
+
+}
+
+resultBox.style.display="block";
+}
+.catch(error=>{
+
+document.getElementById("error").innerHTML=
+"❌ students.json लोड नहीं हो सका।";
+
+document.getElementById("result").style.display="none";
+
+console.log(error);
+
+});
