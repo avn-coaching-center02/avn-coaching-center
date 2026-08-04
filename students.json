@@ -1,0 +1,12 @@
+[
+  {
+    "roll":"1001",
+    "name":"Demo Student",
+    "father":"Demo Father",
+    "physics":"Result Awaited",
+    "chemistry":"Result Awaited",
+    "mathematics":"Result Awaited",
+    "biology":"Result Awaited",
+    "status":"Result Awaited"
+  }
+]
