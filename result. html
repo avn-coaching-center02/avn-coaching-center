@@ -1,1 +1,238 @@
- 
+ <!DOCTYPE html>
+<html lang="hi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>AVN Coaching Center Result</title>
+
+<style>
+body{
+font-family:Arial,sans-serif;
+background:#f2f6fa;
+margin:0;
+padding:0;
+}
+
+header{
+background:#0b6efd;
+color:white;
+padding:20px;
+text-align:center;
+}
+
+.container{
+max-width:700px;
+margin:20px auto;
+background:white;
+padding:20px;
+border-radius:10px;
+box-shadow:0 0 10px #ccc;
+}
+
+input,select,button{
+width:100%;
+padding:12px;
+margin:10px 0;
+font-size:16px;
+border-radius:8px;
+border:1px solid #ccc;
+}
+
+button{
+background:#0b6efd;
+color:white;
+border:none;
+font-weight:bold;
+cursor:pointer;
+}
+
+table{
+width:100%;
+border-collapse:collapse;
+margin-top:20px;
+}
+
+th,td{
+border:1px solid #ccc;
+padding:10px;
+text-align:center;
+}
+
+th{
+background:#0b6efd;
+color:white;
+}
+
+.pass{
+color:green;
+font-weight:bold;
+}
+
+.fail{
+color:red;
+font-weight:bold;
+}
+
+.awaited{
+color:#ff9800;
+font-weight:bold;
+}
+</style>
+
+</head>
+
+<body>
+
+<header>
+<h1>AVN Coaching Center</h1>
+<p>Naraini, Shafipur, Sultanpur</p>
+<h3>Student Result Portal</h3>
+</header>
+
+<div class="container">
+
+<h2>अपना रिजल्ट देखें</h2>
+
+<input
+type="text"
+id="roll"
+placeholder="Roll Number डालें">
+
+<select id="test">
+
+<option value="">-- Test चुनें --</option>
+
+<option value="1st Assessment Test 2026">
+1st Assessment Test 2026
+</option>
+
+</select>
+
+<button onclick="searchResult()">
+🔍 Result देखें
+</button>
+
+<div id="error"></div>
+
+<div id="result" style="display:none">
+
+<h2 id="studentName"></h2>
+
+<p><b>Roll No :</b>
+<span id="studentRoll"></span></p>
+
+<p><b>Test :</b>
+<span id="testName"></span></p>
+
+<table>
+
+<tr>
+<th>Subject</th>
+<th>Result</th>
+</tr>
+
+<tbody id="marks"></tbody>
+
+</table>
+
+<p><b>Total :</b>
+<span id="total"></span></p>
+
+<p><b>Percentage :</b>
+<span id="percentage"></span></p>
+
+<p><b>Status :</b>
+<span id="status"></span></p>
+
+</div>
+
+</div>
+
+<footer style="text-align:center;padding:20px;background:#0b6efd;color:white;margin-top:30px;">
+© 2026 AVN Coaching Center
+</footer>
+
+<script>
+
+async function searchResult(){
+
+let roll=document.getElementById("roll").value.trim();
+
+let test=document.getElementById("test").value;
+
+document.getElementById("error").innerHTML="";
+
+if(roll=="" || test==""){
+
+document.getElementById("error").innerHTML=
+"<span style='color:red'>Roll Number और Test चुनें</span>";
+
+return;
+
+}
+
+const data=await fetch("students.json");
+
+const students=await data.json();
+
+const student=students.find(s=>s.roll==roll && s.test==test);
+
+if(!student){
+
+document.getElementById("result").style.display="none";
+
+document.getElementById("error").innerHTML=
+"<span style='color:red'>Result नहीं मिला</span>";
+
+return;
+let html="";
+
+html+=`
+<tr><td>Physics</td><td>${student.physics}</td></tr>
+<tr><td>Chemistry</td><td>${student.chemistry}</td></tr>
+<tr><td>Mathematics</td><td>${student.mathematics}</td></tr>
+<tr><td>Biology</td><td>${student.biology}</td></tr>
+`;
+
+document.getElementById("marks").innerHTML=html;
+
+document.getElementById("total").innerHTML="Result Awaited";
+
+document.getElementById("percentage").innerHTML="Result Awaited";
+
+const status=document.getElementById("status");
+
+status.innerHTML=student.status;
+
+if(student.status=="PASS"){
+
+status.className="pass";
+
+}
+else if(student.status=="FAIL"){
+
+status.className="fail";
+
+}
+else{
+
+status.className="awaited";
+
+}
+
+}
+
+</script>
+
+</body>
+</html>
+}
+
+document.getElementById("result").style.display="block";
+
+document.getElementById("studentName").innerText=student.name;
+
+document.getElementById("studentRoll").innerText=student.roll;
+
+document.getElementById("testName").innerText=student.test;
